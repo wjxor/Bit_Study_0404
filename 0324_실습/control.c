@@ -8,23 +8,33 @@
 // char	g_name[DATA_MAX][20];
 // char	g_phone[DATA_MAX][20];
 
-member g_members[DATA_MAX];
+member* g_members;
+int g_max;
 
 
 //g_id의 모든 값들을 -1으로 초기화..
 //g_name과 g_phone의 모든 문자열을 "" 초기화 
 void con_init()
 {
-	for (int i = 0; i < DATA_MAX; i++)
+	// 동적 배열 생성
+	printf("멤버 저장 개수 : ");
+	scanf_s("%d", &g_max);
+
+	g_members = (member*)malloc(sizeof(member) * g_max);
+	if (g_members == NULL)
+		exit(1);
+
+	for (int i = 0; i < g_max; i++)
 	{
 		g_members[i].id = -1;
 		strcpy_s(g_members[i].name, sizeof(g_members[i].name), "-");
 		strcpy_s(g_members[i].phone, sizeof(g_members[i].phone), "-");
 
-		// g_id[i]		= -1;
-		// strcpy_s(g_name[i], sizeof(g_name[i]), "-");
-		// strcpy_s(g_phone[i], sizeof(g_phone[i]), "-");
 	}
+}
+
+void con_exit() {
+	free(g_members);
 }
 
 //전역변수의 모든 값들 출력
@@ -39,7 +49,7 @@ void con_init()
 void con_printall()
 {
 	printf("--------------------------------------------------------------------------\n");
-	for (int i = 0; i < DATA_MAX; i++)
+	for (int i = 0; i < g_max; i++)
 	{
 		printf("[%2d] %4d %8s %10s\n",i, 
 				g_members[i].id, g_members[i].name, g_members[i].phone);
@@ -62,7 +72,7 @@ void con_insert()
 	int idx, id;
 	char name[20], phone[20];
 
-	printf("저장할 위치(0~%d) : ", DATA_MAX-1);
+	printf("저장할 위치(0~%d) : ", g_max - 1);
 	scanf_s("%d", &idx);
 
 	printf("아이디 : ");			scanf_s("%d", &id);
@@ -99,7 +109,7 @@ void con_select()
 	printf("찾고자 하는 정수 입력 : ");
 	scanf_s("%d", &id);
 
-	for (int i = 0; i < DATA_MAX; i++)
+	for (int i = 0; i < g_max; i++)
 	{
 		if (g_members[i].id == id)
 		{
@@ -132,7 +142,7 @@ void con_update()
 	printf("변경할 전화번호 : ");
 	gets_s(phone, sizeof(phone));
 
-	for (int i = 0; i < DATA_MAX; i++)
+	for (int i = 0; i < g_max; i++)
 	{
 		if (g_members[i].id == find_id)
 		{
@@ -157,7 +167,7 @@ void con_delete()
 	printf("삭제할 아이디 입력 : ");
 	scanf_s("%d", &del_id);
 
-	for (int i = 0; i < DATA_MAX; i++)
+	for (int i = 0; i < g_max; i++)
 	{
 		if (g_members[i].id == del_id)
 		{

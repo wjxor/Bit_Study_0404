@@ -3,6 +3,7 @@
 #pragma once
 
 void con_init();
+void con_exit();
 void con_insert();
 void con_printall();
 void con_select();
