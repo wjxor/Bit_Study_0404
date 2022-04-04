@@ -1,0 +1,15 @@
+구조체 배우기 전
+
+회원들의 정보를 5개 저장!
+- 아이디, 이름, 전화번호
+
+#define DATA_MAX 5
+
+int g_id[DATA_MAX];
+char g_name[DATA_MAX][20];
+char g_phone[DATA_MAX][20];
+
+구조체 배운 후
+
+원하는 타입을 정의!!!!!
+회원[아이디, 이름, 전화번호] --> 구조체 정의(== 타입을 정의)
